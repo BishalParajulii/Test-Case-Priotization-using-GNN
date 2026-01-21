@@ -1,0 +1,19 @@
+{
+  "strategy_name": "graph_autoencoder_compress",
+  "strategy_params": {
+    "latent_dim": 64,
+    "hidden_dim": 256,
+    "smooth_lambda": 0.001,
+    "epochs": 10,
+    "lr": 0.001
+  },
+  "num_tests": 5,
+  "num_files": 1400,
+  "input_dim": 1400,
+  "latent_dim": 64,
+  "reduction_ratio": 0.045714285714285714,
+  "num_edges_tt": 20,
+  "smooth_lambda": 0.001,
+  "epochs": 10,
+  "train_loss": 0.1986027956008911
+}

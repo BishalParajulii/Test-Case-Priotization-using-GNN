@@ -1,0 +1,15 @@
+{
+  "apfd": 0.5029156035328755,
+  "apfd_baseline": 0.5018512115950782,
+  "delta_apfd": 0.0010643919377972821,
+  "fault_retention_ratio": 1.0,
+  "recall_at_k": 0.001962708537782139,
+  "precision_at_k": 0.2,
+  "k": 10,
+  "num_tests_ranked": 6500,
+  "num_failures_current": 1019,
+  "train_time_s": 0.36675477027893066,
+  "gpu_mem_mb": 0.0,
+  "peak_nodes": 6500,
+  "peak_edges": 20
+}
