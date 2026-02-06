@@ -15,5 +15,5 @@
   "num_edges_tt": 20,
   "smooth_lambda": 0.001,
   "epochs": 10,
-  "train_loss": 0.20481957495212555
+  "train_loss": 0.19803489744663239
 }

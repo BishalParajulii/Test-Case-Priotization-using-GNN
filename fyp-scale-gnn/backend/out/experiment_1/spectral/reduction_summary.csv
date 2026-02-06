@@ -1,2 +1,7 @@
 strategy_name,strategy_params,orig_tests,orig_sources,orig_edges,red_tests,red_sources,red_edges,tests_retention_ratio,edges_retention_ratio,jaccard_fidelity_mean,jaccard_fidelity_std
+spectral_coarsen,{'k_clusters': 5},6500,1400,46868,5,1400,4369,0.0007692307692307,0.0932192540752752,1.0,0.0
+spectral_coarsen,{'k_clusters': 5},6500,1400,46868,5,1400,4369,0.0007692307692307,0.0932192540752752,1.0,0.0
+spectral_coarsen,{'k_clusters': 5},6500,1400,46868,5,1400,4369,0.0007692307692307,0.0932192540752752,1.0,0.0
+spectral_coarsen,{'k_clusters': 5},6500,1400,46868,5,1400,4369,0.0007692307692307,0.0932192540752752,1.0,0.0
+spectral_coarsen,{'k_clusters': 5},6500,1400,46868,5,1400,4369,0.0007692307692307,0.0932192540752752,1.0,0.0
 spectral_coarsen,{'k_clusters': 5},6500,1400,46868,5,1400,4369,0.0007692307692307692,0.09321925407527525,1.0,0.0
