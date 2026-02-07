@@ -1,15 +1,15 @@
 {
-  "apfd": 0.5018512115950782,
+  "apfd": 0.5064428927304295,
   "apfd_baseline": 0.5018512115950782,
-  "delta_apfd": 0.0,
+  "delta_apfd": 0.004591681135351355,
   "fault_retention_ratio": 1.0,
-  "recall_at_k": 0.0009813542688910696,
-  "precision_at_k": 0.1,
+  "recall_at_k": 0.001962708537782139,
+  "precision_at_k": 0.2,
   "k": 10,
   "num_tests_ranked": 6500,
   "num_failures_current": 1019,
-  "train_time_s": 0.45787858963012695,
+  "train_time_s": 0.2351093292236328,
   "gpu_mem_mb": 0.0,
   "peak_nodes": 6500,
-  "peak_edges": 20
+  "peak_edges": 90
 }

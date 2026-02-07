@@ -8,4 +8,5 @@ class Dataset(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
     path = Column(String)
+    status = Column(String, default = 'not_run')
     created_at = Column(DateTime, default=datetime.utcnow)
