@@ -20,36 +20,36 @@ def get_db():
 
 
 # -------------------- RUN EXPERIMENT DIRECTLY FROM DATASET --------------------
-@router.post("/run/{dataset_id}", response_model=ExperimentResponse)
-def run_experiment_direct(
-    dataset_id: int,
-    background_tasks: BackgroundTasks,
-    db: Session = Depends(get_db)
-):
-    # Check dataset exists
-    dataset = db.query(Dataset).filter(Dataset.id == dataset_id).first()
-    if not dataset:
-        raise HTTPException(status_code=404, detail="Dataset not found")
+# @router.post("/run/{dataset_id}", response_model=ExperimentResponse)
+# def run_experiment_direct(
+#     dataset_id: int,
+#     background_tasks: BackgroundTasks,
+#     db: Session = Depends(get_db)
+# ):
+#     # Check dataset exists
+#     dataset = db.query(Dataset).filter(Dataset.id == dataset_id).first()
+#     if not dataset:
+#         raise HTTPException(status_code=404, detail="Dataset not found")
 
-    # Create a new experiment automatically
-    experiment = Experiment(
-        name=f"Experiment for {dataset.name}",
-        dataset_id=dataset.id,
-        parameters={},  # default empty
-        status="PENDING"
-    )
-    db.add(experiment)
-    db.commit()
-    db.refresh(experiment)
+#     # Create a new experiment automatically
+#     experiment = Experiment(
+#         name=f"Experiment for {dataset.name}",
+#         dataset_id=dataset.id,
+#         parameters={},  # default empty
+#         status="PENDING"
+#     )
+#     db.add(experiment)
+#     db.commit()
+#     db.refresh(experiment)
 
-    # Start running in background
-    background_tasks.add_task(run_scale_gnn, experiment.id)
+#     # Start running in background
+#     background_tasks.add_task(run_scale_gnn, experiment.id)
 
-    # Update dataset status
-    dataset.status = "running"
-    db.commit()
+#     # Update dataset status
+#     dataset.status = "running"
+#     db.commit()
 
-    return experiment
+#     return experiment
 
 
 # -------------------- LIST ALL EXPERIMENTS --------------------
@@ -100,26 +100,41 @@ def run_existing_experiment(
     background_tasks: BackgroundTasks,
     db: Session = Depends(get_db)
 ):
-    experiment = db.query(Experiment).filter(Experiment.id == experiment_id).first()
+    experiment = (
+        db.query(Experiment)
+        .filter(Experiment.id == experiment_id)
+        .first()
+    )
+
     if not experiment:
         raise HTTPException(status_code=404, detail="Experiment not found")
 
     if experiment.status != "PENDING":
         raise HTTPException(
             status_code=400,
-            detail="Experiment already started"
+            detail=f"Experiment already {experiment.status}"
         )
 
-    # Start background task
-    background_tasks.add_task(run_scale_gnn, experiment.id)
+    # Update experiment status
+    experiment.status = "RUNNING"
 
     # Update dataset status
-    dataset = db.query(Dataset).filter(Dataset.id == experiment.dataset_id).first()
+    dataset = (
+        db.query(Dataset)
+        .filter(Dataset.id == experiment.dataset_id)
+        .first()
+    )
     if dataset:
         dataset.status = "running"
-        db.commit()
+
+    db.commit()
+
+    # Run in background
+    background_tasks.add_task(run_scale_gnn, experiment.id)
 
     return {
         "message": "Experiment started",
-        "experiment_id": experiment.id
+        "experiment_id": experiment.id,
+        "status": "RUNNING"
     }
+

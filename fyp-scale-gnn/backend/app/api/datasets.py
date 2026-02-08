@@ -4,6 +4,7 @@ from fastapi import APIRouter, UploadFile, File, Form, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.db.session import SessionLocal
+from app.models.experiment import Experiment
 from app.models.dataset import Dataset
 from app.schemas.dataset import DatasetResponse
 from app.core.config import settings
@@ -31,11 +32,13 @@ def upload_dataset(
     db: Session = Depends(get_db)
 ):
     try:
+        # Step 1: Create Dataset entry
         dataset = Dataset(name=name, path="")
         db.add(dataset)
         db.commit()
         db.refresh(dataset)
 
+        # Step 2: Save files to disk
         dataset_dir = os.path.join(settings.DATA_DIR, f"dataset_{dataset.id}")
         os.makedirs(dataset_dir, exist_ok=True)
 
@@ -53,6 +56,19 @@ def upload_dataset(
 
         dataset.path = dataset_dir
         db.commit()
+        db.refresh(dataset)
+
+        # Step 3: Auto-create a pending Experiment linked to this dataset
+        experiment = Experiment(
+            name=f"Experiment for {dataset.name}",
+            dataset_id=dataset.id,
+            parameters={},  # default empty parameters
+            status="PENDING"
+        )
+        db.add(experiment)
+        db.commit()
+        db.refresh(experiment)
+
         return dataset
 
     except Exception as e:
