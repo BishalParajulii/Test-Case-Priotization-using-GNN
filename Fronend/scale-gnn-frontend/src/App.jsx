@@ -4,7 +4,6 @@ import TabButtons from './components/Tabs/TabButtons';
 import ExperimentList from './components/Experiments/ExperimentList';
 import ResultsPanel from './components/Experiments/ResultsPanel';
 import DatasetUpload from './components/Upload/DatasetUpload';
-import ExperimentCreate from './components/Create/ExperimentCreate';
 import { API_BASE, fetchJSON } from './api/api';
 
 function App() {
@@ -71,12 +70,12 @@ function App() {
         )}
 
         {activeTab === 'upload' && <DatasetUpload onSuccess={() => setActiveTab('create')} />}
-        {activeTab === 'create' && (
-          <ExperimentCreate onSuccess={() => { loadExperiments(); setActiveTab('experiments'); }} />
-        )}
+
       </div>
     </div>
   );
 }
 
 export default App;
+
+

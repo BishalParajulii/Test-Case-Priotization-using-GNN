@@ -4,7 +4,6 @@ export default function TabButtons({ activeTab, setActiveTab }) {
   const tabs = [
     { id: 'experiments', label: 'Experiments' },
     { id: 'upload', label: 'Upload Dataset' },
-    { id: 'create', label: 'Create Experiment' },
   ];
 
   return (
